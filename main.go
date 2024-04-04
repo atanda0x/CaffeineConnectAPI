@@ -1,22 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"io"
+	"log"
 	"net/http"
+	"os"
+
+	"github.com/atanda0x/CaffeineConnectAPI/handler"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		d, err := io.ReadAll(r.Body)
-		if err != nil {
-			http.Error(w, "Opps", http.StatusBadRequest)
-			return
-		}
+	l := log.New(os.Stdout, "product-api", log.LstdFlags)
+	hh := handler.ProductAPI(l)
 
-		fmt.Fprintf(w, "Hi %s", d)
+	sm := http.NewServeMux()
+	sm.Handle("/", hh)
 
-	})
-
-	http.ListenAndServe(":9090", nil)
+	http.ListenAndServe(":9090", sm)
 }
