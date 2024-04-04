@@ -5,15 +5,16 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/atanda0x/CaffeineConnectAPI/handler"
+	handler "github.com/atanda0x/CaffeineConnectAPI/handlers"
 )
 
 func main() {
 	l := log.New(os.Stdout, "product-api", log.LstdFlags)
-	hh := handler.ProductAPI(l)
 
+	// create the handler
+	ph := handler.NewProducts(l)
+	// Create a new serrve mux and register the handler
 	sm := http.NewServeMux()
-	sm.Handle("/", hh)
+	sm.Handle("/", ph)
 
-	http.ListenAndServe(":9090", sm)
 }
