@@ -62,7 +62,7 @@ func (p *Products) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // getProduct return the products from the datastore
-func (p *Products) getProducts(w http.ResponseWriter, r *http.Request) {
+func (p *Products) getProducts(w http.ResponseWriter, _ *http.Request) {
 	p.l.Println("Handle GET product")
 
 	// fetch the product from datastore
