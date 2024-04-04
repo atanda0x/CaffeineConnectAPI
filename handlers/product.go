@@ -58,6 +58,6 @@ func (p *Products) addProduct(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Unable to unmarsal json", http.StatusBadRequest)
 	}
-	p.l.Printf("prod: %#v", prod)
+	data.AddProduct(prod)
 
 }

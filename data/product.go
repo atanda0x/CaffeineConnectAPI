@@ -24,7 +24,7 @@ type Products []*Product
 // FromJSON
 func (p *Product) FromJSON(r io.Reader) error {
 	e := json.NewDecoder(r)
-	e.Decode(p)
+	return e.Decode(p)
 }
 
 // ToJSON serialized the content of the collection to json
@@ -34,6 +34,16 @@ func (p *Product) FromJSON(r io.Reader) error {
 func (p *Products) ToJOSN(w io.Writer) error {
 	e := json.NewEncoder(w)
 	return e.Encode(p)
+}
+
+func AddProduct(p *Product) {
+	p.ID = getNextID()
+	productList = append(productList, p)
+}
+
+func getNextID() int {
+	lp := productList[len(productList)-1]
+	return lp.ID + 1
 }
 
 // GetProduct return a list of products
