@@ -2,9 +2,12 @@ package data
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"time"
 )
+
+var ErrProductNotFound = fmt.Errorf("product not found")
 
 // Produc t defines the structure for an API
 type Product struct {
@@ -39,6 +42,25 @@ func (p *Products) ToJOSN(w io.Writer) error {
 func AddProduct(p *Product) {
 	p.ID = getNextID()
 	productList = append(productList, p)
+}
+
+func UpdateProducts(id int, p *Product) error {
+	_, pos, err := findProduct(id)
+	if err != nil {
+		return err
+	}
+	p.ID = id
+	productList[pos] = p
+	return nil
+}
+
+func findProduct(id int) (*Product, int, error) {
+	for i, p := range productList {
+		if p.ID == id {
+			return p, i, nil
+		}
+	}
+	return nil, -1, ErrProductNotFound
 }
 
 func getNextID() int {
