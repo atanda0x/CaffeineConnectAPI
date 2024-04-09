@@ -9,6 +9,9 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// keyProduct type
+type KeyProduct struct{}
+
 // Product is a http.handler
 type Products struct {
 	l *log.Logger
@@ -71,4 +74,22 @@ func (p *Products) UpdateProducts(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Product not found", http.StatusNotFound)
 		return
 	}
+}
+
+// Middleware
+func (p *Products) MiddlewareProductValidator(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		prod := &data.Product{}
+
+		err := prod.FromJSON(r.Body)
+		if err != nil {
+			http.Error(w, "Unable to unmarsal json", http.StatusBadRequest)
+			return
+		}
+
+		ctx := r.Context().WithValue(KeyProduct{}, prod)
+		req := r.WithContext(ctx)
+
+		next.ServeHTTP(w, req)
+	})
 }
