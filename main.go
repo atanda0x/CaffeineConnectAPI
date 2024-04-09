@@ -7,6 +7,7 @@ import (
 	"time"
 
 	handler "github.com/atanda0x/CaffeineConnectAPI/handlers"
+	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -14,9 +15,13 @@ func main() {
 
 	// create the handler
 	ph := handler.NewProducts(l)
+
 	// Create a new serrve mux and register the handler
-	sm := http.NewServeMux()
-	sm.Handle("/", ph)
+	sm := mux.NewRouter()
+
+	// Route
+	getRouter := sm.Methods("GET").Subrouter()
+	getRouter.HandleFunc("/", ph.ServeHTTP)
 
 	// create a new server
 	s := http.Server{
