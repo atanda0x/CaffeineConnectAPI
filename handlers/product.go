@@ -9,6 +9,7 @@ import (
 	"github.com/atanda0x/CaffeineConnectAPI/data"
 )
 
+// Product is a http.handler
 type Products struct {
 	l *log.Logger
 }
