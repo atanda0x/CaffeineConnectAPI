@@ -21,7 +21,13 @@ func main() {
 
 	// Route
 	getRouter := sm.Methods("GET").Subrouter()
-	getRouter.HandleFunc("/", ph.ServeHTTP)
+	getRouter.HandleFunc("/", ph.GetProducts)
+
+	putRouter := sm.Methods("PUT").Subrouter()
+	putRouter.HandleFunc("/{id:[0-9]+}", ph.UpdateProducts)
+
+	postRouter := sm.Methods("POST").Subrouter()
+	postRouter.HandleFunc("/", ph.AddProduct)
 
 	// create a new server
 	s := http.Server{

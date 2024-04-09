@@ -3,8 +3,10 @@ package handler
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/atanda0x/CaffeineConnectAPI/data"
+	"github.com/gorilla/mux"
 )
 
 // Product is a http.handler
@@ -45,11 +47,16 @@ func (p *Products) AddProduct(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (p *Products) updateProducts(id int, w http.ResponseWriter, r *http.Request) {
-	p.l.Println("Handle POST Products")
+func (p *Products) UpdateProducts(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		http.Error(w, "unable to convert id", http.StatusBadRequest)
+	}
+	p.l.Println("Handle POST Products", id)
 
 	prod := &data.Product{}
-	err := prod.FromJSON(r.Body)
+	err = prod.FromJSON(r.Body)
 
 	if err != nil {
 		http.Error(w, "Unable to unmarsal json", http.StatusBadRequest)
