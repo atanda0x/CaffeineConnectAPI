@@ -1,6 +1,10 @@
 package data
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/require"
+)
 
 func TestValidate(t *testing.T) {
 	p := &Product{
@@ -9,7 +13,5 @@ func TestValidate(t *testing.T) {
 	}
 
 	err := p.Validate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
