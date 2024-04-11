@@ -34,12 +34,12 @@ func main() {
 
 	// create a new server
 	s := http.Server{
-		Addr:         ":9090",
-		Handler:      sm,
-		ErrorLog:     l,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		IdleTimeout:  120 * time.Second,
+		Addr:         ":9090",           // Address
+		Handler:      sm,                // Set default handler
+		ErrorLog:     l,                 // Set the logger for the server
+		ReadTimeout:  5 * time.Second,   // Max time to  read request from the client
+		WriteTimeout: 10 * time.Second,  // Max time to write response to the client
+		IdleTimeout:  120 * time.Second, // Max time for connection using TCP keep-alive
 	}
 
 	s.ListenAndServe()
