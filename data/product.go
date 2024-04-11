@@ -12,9 +12,9 @@ var ErrProductNotFound = fmt.Errorf("product not found")
 // Produc t defines the structure for an API
 type Product struct {
 	ID          int     `json:"id"`
-	Name        string  `json:"name"`
+	Name        string  `json:"name" validate:"required"`
 	Description string  `json:"description"`
-	Price       float64 `json:"price"`
+	Price       float64 `json:"price" validate:"gt=0"`
 	SKU         string  `json:"sku"`
 	CreatedOn   string  `json:"-"`
 	UpdatedOn   string  `json:"-"`
@@ -23,6 +23,12 @@ type Product struct {
 
 // Product is a collection of project
 type Products []*Product
+
+func (p *Product) Validate() error {
+	validate := validator.New()
+	return validate.Struct(p)
+
+}
 
 // FromJSON
 func (p *Product) FromJSON(r io.Reader) error {
