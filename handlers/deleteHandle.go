@@ -11,7 +11,7 @@ import (
 // swagger:route DELETE /products/{id} products deleteProduct
 // Returns a list of products
 // response:
-//	200: productsResponse
+//	201: noContent
 
 // DeleteProdut detele product from database
 func (p *Products) DeleteProduct(w http.ResponseWriter, r *http.Request) {
