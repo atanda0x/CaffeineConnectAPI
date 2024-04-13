@@ -14,6 +14,10 @@ var ErrProductNotFound = fmt.Errorf("product not found")
 
 // Produc t defines the structure for an API
 type Product struct {
+	// the id for this user
+	//
+	// required: true
+	// min: 1
 	ID          int     `json:"id"`
 	Name        string  `json:"name" validate:"required"`
 	Description string  `json:"description"`
@@ -75,7 +79,11 @@ func UpdateProducts(id int, p *Product) error {
 }
 
 func DeleteProduct(id int) error {
-
+	_, pos, err := findProduct(id)
+	if err != nil {
+		return err
+	}
+	productList = append(productList[:pos], productList[pos+1])
 	return nil
 }
 
