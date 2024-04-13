@@ -8,6 +8,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// swagger:route DELETE /products/{id} products deleteProduct
+// Returns a list of products
+// response:
+//	200: productsResponse
+
+// DeleteProdut detele product from database
 func (p *Products) DeleteProduct(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, _ := strconv.Atoi(vars["id"])

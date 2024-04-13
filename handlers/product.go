@@ -24,6 +24,14 @@ import (
 	"github.com/atanda0x/CaffeineConnectAPI/data"
 )
 
+// A list of products return in the response
+// swagger:response
+type productsResponse struct {
+	// All product in the system
+	//in: body
+	Body []data.Product
+}
+
 // keyProduct type
 type KeyProduct struct{}
 

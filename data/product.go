@@ -74,6 +74,11 @@ func UpdateProducts(id int, p *Product) error {
 	return nil
 }
 
+func DeleteProduct(id int) error {
+
+	return nil
+}
+
 func findProduct(id int) (*Product, int, error) {
 	for i, p := range productList {
 		if p.ID == id {
